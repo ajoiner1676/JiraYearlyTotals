@@ -14,17 +14,22 @@ def yearly_total_req(issueType, wantedYr):
     r = 'http://camgian.atlassian.net/rest/api/latest/search?jql=' + query
     return r
 
-#Get username, password, and year from cmd line
-usrName = sys.argv[1]
-passWrd = sys.argv[2]
-year = sys.argv[3]
+def main():
+    #Get username, password, and year from cmd line
+    usrName = sys.argv[1]
+    passWrd = sys.argv[2]
+    year = sys.argv[3]
 
-issues = ['Story', '"New Feature"', 'Task', 'Improvement', 'Bug']
+    issues = ['Story', '"New Feature"', 'Task', 'Improvement', 'Bug']
 
-for x in issues:
-    #Submit request to Jira API store in resp
-    resp = requests.get(yearly_total_req(x, year), auth=(usrName, passWrd))
-    #print(resp.status_code)
-    #store response json in ans to access json structure
-    ans = resp.json()
-    print('Number of {} issues for {}: {}'.format(x, year, ans['total']))
+    for x in issues:
+        #Submit request to Jira API store in resp
+        resp = requests.get(yearly_total_req(x, year), auth=(usrName, passWrd))
+        #print(resp.status_code)
+        #store response json in and to access json structure
+        ans = resp.json()
+        print('Number of {} issues for {}: {}'.format(x, year, ans['total']))
+    return 0
+
+if __name__=='__main__':
+    sys.exit(main())
